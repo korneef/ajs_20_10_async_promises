@@ -1,7 +1,14 @@
+import read from './reader';
+import json from './parser';
+
 export default class GameSavingLoader {
   static load() {
-    const data = read(); // возвращается Promise!
-    const value = json(data); // возвращается Promise!
-    return value;
+    return new Promise((resolve) => {
+      read().then((buffer) => {
+        json(buffer).then((string) => {
+          resolve(string);
+        });
+      });
+    });
   }
 }
